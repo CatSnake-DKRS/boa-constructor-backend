@@ -23,7 +23,7 @@ apiController.englishToCode = async (req, res, next) => {
 
   // tempreture can a stretch feature - if we let user decide on the tempreture,
   // we will get on the req.body as well
-  const tempreture = 0.7;
+  const temperature = 0.7;
 
   try {
     // making a call to the Dall-e API
@@ -31,7 +31,7 @@ apiController.englishToCode = async (req, res, next) => {
       model: 'text-davinci-002',
       // prompt: `Summarize this for a second-grade student:\n${language} \n${text}`,
       prompt: `Summarize this for a second-grade student:\n${text}`,
-      temperature: tempreture,
+      temperature,
       max_tokens: 256,
       top_p: 1,
       frequency_penalty: 0,

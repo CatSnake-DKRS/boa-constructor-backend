@@ -1,7 +1,6 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require('sequelize');
 
-const URI =
-  "postgres://krnfkulr:fHbXypUFMADoaqlSg5av5Q6920AkDpXi@peanut.db.elephantsql.com/krnfkulr";
+const URI = 'postgres://krnfkulr:fHbXypUFMADoaqlSg5av5Q6920AkDpXi@peanut.db.elephantsql.com/krnfkulr';
 
 const sequelize = new Sequelize(URI);
 
@@ -11,7 +10,7 @@ const sequelize = new Sequelize(URI);
 //   dialect: 'postgres',
 // });
 
-const User = sequelize.define("User", {
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -33,7 +32,7 @@ const User = sequelize.define("User", {
   },
 });
 
-const Request = sequelize.define("Request", {
+const Request = sequelize.define('Request', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -51,7 +50,7 @@ const Request = sequelize.define("Request", {
 });
 
 User.hasMany(Request, {
-  foreignKey: "user_id",
+  foreignKey: 'user_id',
 });
 Request.belongsTo(User);
 
@@ -60,9 +59,9 @@ sequelize.sync();
 async function auth() {
   try {
     await sequelize.authenticate();
-    console.log("Connection has been established successfully");
+    console.log('Connection has been established successfully');
   } catch (error) {
-    console.error("Unable to connect to the database:", error);
+    console.error('Unable to connect to the database:', error);
   }
 }
 
