@@ -9,8 +9,6 @@ const app = express();
 const { PORT } = process.env;
 const auth = require("./models/userModels");
 
-auth();
-
 // app.use(express.static('stylesheets'));
 app.use(express.json());
 app.use(bodyParser.json());
