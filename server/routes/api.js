@@ -1,39 +1,41 @@
-const express = require('express');
-const apiController = require('../controllers/apiController');
+const express = require("express");
+const apiController = require("../controllers/apiController");
+const requestController = require("../controllers/requestController");
 
 const router = express.Router();
 
 router.post(
-  '/codetoen',
+  "/codetoen",
   apiController.basicTestRunner,
   apiController.codeToEnglish,
-  (req, res, next) => {
+  requestController.saveRequest,
+  (req, res) => {
     res
-      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader("Access-Control-Allow-Origin", "*")
       .status(200)
-      .json(res.locals.text);
+      .json(res.locals.query);
   }
 );
 
 router.post(
-  '/entocode',
+  "/entocode",
   apiController.basicTestRunner,
   apiController.englishToCode,
-  (req, res, next) => {
+  (req, res) => {
     res
-      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader("Access-Control-Allow-Origin", "*")
       .status(200)
       .json(res.locals.text);
   }
 );
 
 router.post(
-  '/entosql',
+  "/entosql",
   apiController.basicTestRunner,
   apiController.englishToSql,
-  (req, res, next) => {
+  (req, res) => {
     res
-      .setHeader('Access-Control-Allow-Origin', '*')
+      .setHeader("Access-Control-Allow-Origin", "*")
       .status(200)
       .json(res.locals.text);
   }

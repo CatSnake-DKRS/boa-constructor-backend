@@ -5,12 +5,13 @@ const { request } = require('../server');
 const requestController = {};
 
 requestController.saveRequest = async (req, res, next) => {
-  const { username, text: code } = req.body;
+  const { username } = req.body;
+  const { translation, query, schemaString } = res.locals;
   // get translation from res.locals
   // if user is not logged in, skip this step
   if (!username) return next();
   // if code or translation not provided, return error
-  if (!code || !translation) {
+  if (!translation) {
     return next({
       log: 'Error in requestController.saeRequest: code or translation not provided',
       message: { err: 'required body not provided' },
@@ -27,8 +28,9 @@ requestController.saveRequest = async (req, res, next) => {
     });
     // create new request model and add code and translation to it
     const newReq = db.Request.build({
-      code,
       translation,
+      query,
+      schema: schemaString,
       user_id: user[0].id,
     });
     // add connection between user and request with association -> user.hasMany(request)
@@ -65,10 +67,12 @@ requestController.getRequests = async (req, res, next) => {
 
     // consider accessing the original keys names on front end to save processing time here
     const requestsArray = [];
+    console.log(`Requests from database: ${requests}`);
     requests.forEach((el) => {
       requestsArray.push({
-        code: el.code,
+        query: el.query,
         translation: el.translation,
+        schema: el.schema
       });
     });
     res.locals.requests = requestsArray;

@@ -37,7 +37,7 @@ const Request = sequelize.define('Request', {
     primaryKey: true,
     allowNull: false,
   },
-  code: {
+  query: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -45,6 +45,10 @@ const Request = sequelize.define('Request', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  schema: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  }
 });
 
 User.hasMany(Request, {
