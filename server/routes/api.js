@@ -4,12 +4,34 @@ const apiController = require('../controllers/apiController');
 const router = express.Router();
 
 router.post(
-  '/',
+  '/codetoen',
   apiController.basicTestRunner,
-  apiController.getTranslation,
-  // add middleware to save query to db if user is logged in (requestController.saveRequest)
-  // could add middleware to get requests/update the history here
-  (req, res) => {
+  apiController.codeToEnglish,
+  (req, res, next) => {
+    res
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .status(200)
+      .json(res.locals.text);
+  }
+);
+
+router.post(
+  '/entocode',
+  apiController.basicTestRunner,
+  apiController.englishToCode,
+  (req, res, next) => {
+    res
+      .setHeader('Access-Control-Allow-Origin', '*')
+      .status(200)
+      .json(res.locals.text);
+  }
+);
+
+router.post(
+  '/entosql',
+  apiController.basicTestRunner,
+  apiController.englishToSql,
+  (req, res, next) => {
     res
       .setHeader('Access-Control-Allow-Origin', '*')
       .status(200)
