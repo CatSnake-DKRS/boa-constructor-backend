@@ -1,8 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const URI = 'postgres://krnfkulr:fHbXypUFMADoaqlSg5av5Q6920AkDpXi@peanut.db.elephantsql.com/krnfkulr';
-
-const sequelize = new Sequelize(URI);
+const sequelize = new Sequelize(process.env.URI);
 
 // const sequelize = new Sequelize('localdev', 'localdev', 'localdev', {
 //   host: 'localhost',
