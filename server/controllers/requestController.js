@@ -5,7 +5,8 @@ const { request } = require('../server');
 const requestController = {};
 
 requestController.saveRequest = async (req, res, next) => {
-  const { username, code, translation } = req.body;
+  const { username, text: code } = req.body;
+  // get translation from res.locals
   // if user is not logged in, skip this step
   if (!username) return next();
   // if code or translation not provided, return error
@@ -16,7 +17,7 @@ requestController.saveRequest = async (req, res, next) => {
     });
   }
   // if need to pull from res
-  // const { code, translation } = res.locals;
+  // const {  translation } = res.locals;
   // query db to find correct user
   try {
     const user = await db.User.findAll({
@@ -61,6 +62,8 @@ requestController.getRequests = async (req, res, next) => {
         user_id: user[0].id,
       },
     });
+
+    // consider accessing the original keys names on front end to save processing time here
     const requestsArray = [];
     requests.forEach((el) => {
       requestsArray.push({
@@ -68,7 +71,6 @@ requestController.getRequests = async (req, res, next) => {
         translation: el.translation,
       });
     });
-    console.log(requestsArray);
     res.locals.requests = requestsArray;
     return next();
   } catch (error) {

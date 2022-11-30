@@ -1,10 +1,12 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize('localdev', 'localdev', 'localdev', {
-  host: 'localhost',
-  port: process.env.DB_PORT,
-  dialect: 'postgres',
-});
+const sequelize = new Sequelize(process.env.URI);
+
+// const sequelize = new Sequelize('localdev', 'localdev', 'localdev', {
+//   host: 'localhost',
+//   port: process.env.DB_PORT,
+//   dialect: 'postgres',
+// });
 
 const User = sequelize.define('User', {
   id: {
@@ -62,5 +64,8 @@ async function auth() {
 }
 
 module.exports = {
-  auth, User, Request, sequelize,
+  auth,
+  User,
+  Request,
+  sequelize,
 };
