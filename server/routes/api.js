@@ -4,9 +4,9 @@ const apiController = require('../controllers/apiController');
 const router = express.Router();
 
 router.post(
-  '/entocode',
+  '/codetoen',
   apiController.basicTestRunner,
-  apiController.englishToCode,
+  apiController.codeToEnglish,
   (req, res, next) => {
     res
       .setHeader('Access-Control-Allow-Origin', '*')
@@ -16,9 +16,9 @@ router.post(
 );
 
 router.post(
-  '/codetoen',
+  '/entocode',
   apiController.basicTestRunner,
-  apiController.codeToEnglish,
+  apiController.englishToCode,
   (req, res, next) => {
     res
       .setHeader('Access-Control-Allow-Origin', '*')

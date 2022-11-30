@@ -16,9 +16,7 @@ apiController.basicTestRunner = (req, res, next) => {
 
 // middleware for translating code into plain english
 apiController.englishToCode = async (req, res, next) => {
-  console.log(req.body);
   // get the data from the body on the request
-  const { language } = req.body; // Python, JavaScript...
   const { text } = req.body; // code...
 
   // tempreture can a stretch feature - if we let user decide on the tempreture,
@@ -28,13 +26,12 @@ apiController.englishToCode = async (req, res, next) => {
   try {
     // making a call to the Dall-e API
     const response = await openai.createCompletion({
-      model: 'text-davinci-002',
-      // prompt: `Summarize this for a second-grade student:\n${language} \n${text}`,
-      prompt: `Summarize this for a second-grade student:\n${text}`,
-      temperature,
-      max_tokens: 256,
+      model: 'text-davinci-003',
+      prompt: `Use javascript to ${text} `,
+      temperature: 0,
+      max_tokens: 100,
       top_p: 1,
-      frequency_penalty: 0,
+      frequency_penalty: 0.2,
       presence_penalty: 0,
     });
 
@@ -100,29 +97,24 @@ apiController.codeToEnglish = async (req, res, next) => {
 };
 
 apiController.englishToSql = async (req, res, next) => {
-  console.log(req.body);
   // get the data from the body on the request
   const { text, schema } = req.body; // code...
-
   // tempreture can a stretch feature - if we let user decide on the tempreture,
   // we will get on the req.body as well
   const temperature = 0.7;
-  const schemString = '';
-  // schema = { Entertainer: 'id, name, salary, movie_id' };
+  let schemaString = '';
 
   for (const table in schema) {
-    const tableString = table + '(' + schema[table] + `)\n# `;
+    const tableString = '#' + table + '(' + schema[table] + `)\n`;
     schemaString += tableString;
   }
-  // text =
-  //   'Select the list of entertainers who made more than 5 million dollars in 2011';
 
   try {
     // making a call to the Dall-e API
     const response = await openai.createCompletion({
       model: 'text-davinci-002',
-      prompt: `### Postgres SQL tables, with their properties:${schemaString}\n### ${text}\n SELECT`,
-      temperature: tempreture,
+      prompt: `### Postgres SQL tables, with their properties:\n#\n ${schemaString}\n### ${text}\n SELECT`,
+      temperature: temperature,
       max_tokens: 256,
       top_p: 1,
       frequency_penalty: 0,
@@ -140,7 +132,7 @@ apiController.englishToSql = async (req, res, next) => {
   } catch (err) {
     // error handling
     const ourErr = {
-      log: 'Express error handler caught error in the getTranslation apiController',
+      log: 'Express error handler caught error in the englishToSql apiController',
     };
     next(ourErr);
   }
