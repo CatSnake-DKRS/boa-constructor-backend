@@ -10,7 +10,7 @@ const apiController = {};
 const manageRequest = async (req, res, next, prompt, temperature, schema) => {
   // get the query from data on request
   let { query } = req.body;
-  // append SELECT to query for SQL queries
+
   query += schema ? ' \n SELECT' : '';
   try {
     // making a call to the Dall-e API
@@ -30,7 +30,6 @@ const manageRequest = async (req, res, next, prompt, temperature, schema) => {
     }
     // storing translation in form of the string on the response locals object
     res.locals.query = query;
-    // selectively add SELECT to translation for SQL queries
     res.locals.translation = `${
       schema ? 'SELECT' : ''
     }${responseTranslation.join('')}`;
@@ -51,9 +50,11 @@ apiController.basicTestRunner = (req, res, next) => {
 };
 
 // middleware for translating code into plain english
+apiController.englishToCode = async (req,// middleware for translating code into plain english
 apiController.englishToCode = async (req, res, next) => {
-  // takes req, res, next, DALL-E prompt, and temperature
-  await manageRequest(req, res, next, 'Use javascript to', 0);
+ res, // takes req, res, next) => {
+  await manageRequest, DALL-E prompt, and temperature
+  await manageRequest(req, res, next, 'Use javascript to', 0req, res, next, 'Use javascript to', 0);
 };
 
 apiController.codeToEnglish = async (req, res, next) => {
