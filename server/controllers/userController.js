@@ -1,4 +1,4 @@
-const db = require('../models/userModels');
+const db = require("../models/userModels");
 
 const userController = {};
 
@@ -8,9 +8,9 @@ userController.createUser = async (req, res, next) => {
   // check if username/password passed in
   if (!username || !password) {
     return next({
-      log: 'Error in userController.createUser: username or password not provided',
+      log: "Error in userController.createUser: username or password not provided",
       status: 403,
-      message: { err: 'username and pw not provided' },
+      message: { err: "username and pw not provided" },
     });
   }
   try {
@@ -25,7 +25,7 @@ userController.createUser = async (req, res, next) => {
     return next();
   } catch (error) {
     return next({
-      log: 'Error in userController.createUser: error creating user',
+      log: "Error in userController.createUser: error creating user",
       message: { err: error },
     });
   }
@@ -37,9 +37,9 @@ userController.login = async (req, res, next) => {
   // check if username/password is valid
   if (!username || !password) {
     return next({
-      log: 'Error in userController.login: username and password not provided',
+      log: "Error in userController.login: username and password not provided",
       status: 403,
-      message: { err: 'username and pw not provided' },
+      message: { err: "username and pw not provided" },
     });
   }
   try {
@@ -54,7 +54,7 @@ userController.login = async (req, res, next) => {
       return next();
     }
     // error if user/password not in db
-    return res.status(403).send('Incorrect username or password');
+    return res.status(403).send("Incorrect username or password");
   } catch (error) {
     return next(error);
   }

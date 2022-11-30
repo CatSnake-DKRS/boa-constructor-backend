@@ -60,14 +60,14 @@ User.prototype.validPassword = async (password, hashedPassInDB) => {
   return await bcrypt.compareSync(password, hashedPassInDB);
 };
 
-const Request = sequelize.define('Request', {
+const Request = sequelize.define("Request", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
     allowNull: false,
   },
-  code: {
+  query: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -75,10 +75,14 @@ const Request = sequelize.define('Request', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  schema: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 User.hasMany(Request, {
-  foreignKey: 'user_id',
+  foreignKey: "user_id",
 });
 Request.belongsTo(User);
 

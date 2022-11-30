@@ -1,23 +1,24 @@
 // save request
-const db = require('../models/userModels');
-const { request } = require('../server');
+const db = require("../models/userModels");
+const { request } = require("../server");
 
 const requestController = {};
 
 requestController.saveRequest = async (req, res, next) => {
-  const { username, text: code } = req.body;
+  const { username } = req.body;
+  const { translation, query, schemaString } = res.locals;
+  // console.log(translation, query, schemaString);
+  console.log("username:", username, "translation:", translation);
   // get translation from res.locals
   // if user is not logged in, skip this step
   if (!username) return next();
   // if code or translation not provided, return error
-  if (!code || !translation) {
+  if (!translation) {
     return next({
-      log: 'Error in requestController.saeRequest: code or translation not provided',
-      message: { err: 'required body not provided' },
+      log: "Error in requestController.saveRequest: code or translation not provided",
+      message: { err: "required body not provided" },
     });
   }
-  // if need to pull from res
-  // const {  translation } = res.locals;
   // query db to find correct user
   try {
     const user = await db.User.findAll({
@@ -26,18 +27,18 @@ requestController.saveRequest = async (req, res, next) => {
       },
     });
     // create new request model and add code and translation to it
-    const newReq = db.Request.build({
-      code,
+    console.log("saving to db...");
+    const newReq = db.Request.create({
       translation,
+      query,
+      schema: schemaString,
       user_id: user[0].id,
     });
-    // add connection between user and request with association -> user.hasMany(request)
-    await newReq.save();
-    // await db.sequelize.sync();
+
     return next();
   } catch (error) {
     return next({
-      log: 'Error in requestController.saveRequest',
+      log: "Error in requestController.saveRequest",
       status: 400,
       message: { err: error },
     });
@@ -47,7 +48,7 @@ requestController.saveRequest = async (req, res, next) => {
 // get all requests of a user
 requestController.getRequests = async (req, res, next) => {
   const { username } = req.body;
-  console.log('received request for ', username);
+  // console.log('received request for ', username);
   // if user not logged in, do nothing
   if (!username) return next();
   // query db to find correct user
@@ -65,17 +66,19 @@ requestController.getRequests = async (req, res, next) => {
 
     // consider accessing the original keys names on front end to save processing time here
     const requestsArray = [];
+    // console.log(`Requests from database: ${requests}`);
     requests.forEach((el) => {
       requestsArray.push({
-        code: el.code,
+        query: el.query,
         translation: el.translation,
+        schema: el.schema,
       });
     });
     res.locals.requests = requestsArray;
     return next();
   } catch (error) {
     return next({
-      log: 'Error in requestController.getRequests',
+      log: "Error in requestController.getRequests",
       status: 400,
       message: { err: error },
     });
