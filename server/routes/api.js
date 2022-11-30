@@ -13,7 +13,7 @@ router.post(
     res
       .setHeader("Access-Control-Allow-Origin", "*")
       .status(200)
-      .json(res.locals.query);
+      .json(res.locals);
   }
 );
 
@@ -21,11 +21,12 @@ router.post(
   "/entocode",
   apiController.basicTestRunner,
   apiController.englishToCode,
+  requestController.saveRequest,
   (req, res) => {
     res
       .setHeader("Access-Control-Allow-Origin", "*")
       .status(200)
-      .json(res.locals.text);
+      .json(res.locals);
   }
 );
 
@@ -33,11 +34,12 @@ router.post(
   "/entosql",
   apiController.basicTestRunner,
   apiController.englishToSql,
+  requestController.saveRequest,
   (req, res) => {
     res
       .setHeader("Access-Control-Allow-Origin", "*")
       .status(200)
-      .json(res.locals.text);
+      .json(res.locals);
   }
 );
 

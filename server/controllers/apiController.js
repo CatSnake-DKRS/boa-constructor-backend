@@ -33,8 +33,8 @@ apiController.englishToCode = async (req, res, next) => {
       presence_penalty: 0,
     });
     // getting rid of the first 2 '\n' symbols (they will probably be on all of our responses)
-    const responseTranslation = response.data.choices[0].text.split('');
-    while (responseTranslation[0] === '\n' && responseTranslation.length > 1) {
+    const responseTranslation = response.data.choices[0].text.split("");
+    while (responseTranslation[0] === "\n" && responseTranslation.length > 1) {
       responseTranslation.shift();
     }
     // storing translation in form of the string on the response locals object
@@ -43,7 +43,7 @@ apiController.englishToCode = async (req, res, next) => {
   } catch (err) {
     // error handling
     const ourErr = {
-      log: 'Express error handler caught error in the englishToCode apiController',
+      log: "Express error handler caught error in the englishToCode apiController",
     };
     next(ourErr);
   }
@@ -95,14 +95,14 @@ apiController.englishToSql = async (req, res, next) => {
   const { query, schema } = req.body; // code...
   // tempreture can a stretch feature - if we let user decide on the tempreture,
   // we will get on the req.body as well
-  const temperature = 0.7;
-  let schemaString = "";
+  const temperature = 0;
+  let schemaString = '';
 
   for (const table in schema) {
     const tableString = `#${table}(${schema[table]})\n`;
     schemaString += tableString;
-  }
-
+  };
+  
   try {
     // making a call to the Dall-e API
     const response = await openai.createCompletion({
