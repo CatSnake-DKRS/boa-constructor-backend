@@ -23,6 +23,7 @@ router.post(
   apiController.englishToCode,
   requestController.saveRequest,
   (req, res) => {
+    console.log(res.locals);
     res
       .setHeader("Access-Control-Allow-Origin", "*")
       .status(200)
