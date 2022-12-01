@@ -67,5 +67,21 @@ describe('Database Query Validation', () => {
           expect((res.text)).toEqual('{\"err\":\"required body not provided\"}');
         }));
     });
+    describe('POST', () => {
+      it('responds "request saved" when user makes a query without correct body', () => request(server)
+        .post('/user/saveRequest')
+        .send({
+          username: 'robbie3',
+          password: 'banana',
+          query: 'test',
+          translation: 'test',
+          test: true
+        })
+        .expect('Content-Type', /text\/html; charset=utf-8/)
+        .expect(200)
+        .then((res) => {
+          expect((res.text)).toEqual('request saved');
+        }));
+    });
   });
 });
