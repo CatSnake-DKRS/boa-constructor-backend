@@ -6,7 +6,16 @@ const requestController = {};
 
 requestController.saveRequest = async (req, res, next) => {
   const { username } = req.body;
-  const { translation, query, schemaString } = res.locals;
+  let translation;
+  let query;
+  let schemaString;
+
+  // allows for testing of save requests
+  if (req.body.test) {
+    ({ translation, query, schemaString } = req.body);
+  } else {
+    ({ translation, query, schemaString } = res.locals);
+  }
   // console.log(translation, query, schemaString);
   console.log('username:', username, 'translation:', translation);
   // get translation from res.locals
