@@ -1,5 +1,5 @@
 {
-  "name": "sudo-shark-backend",
+  "name": "boa-constructor-backend",
   "version": "0.0.1",
   "description": "",
   "main": "server/server.js",
@@ -7,7 +7,7 @@
     "test": "jest",
     "dev": "nodemon server/server.js"
   },
-  "author": "SharkTalk",
+  "author": "BOA",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.0",
