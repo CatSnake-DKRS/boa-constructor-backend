@@ -1,4 +1,3 @@
-const { teardown } = require('mocha');
 const { Configuration, OpenAIApi } = require('openai');
 
 // setting up authorized access to the Dall-e API
