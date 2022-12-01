@@ -50,11 +50,9 @@ apiController.basicTestRunner = (req, res, next) => {
 };
 
 // middleware for translating code into plain english
-apiController.englishToCode = async (req,// middleware for translating code into plain english
 apiController.englishToCode = async (req, res, next) => {
- res, // takes req, res, next) => {
-  await manageRequest, DALL-E prompt, and temperature
-  await manageRequest(req, res, next, 'Use javascript to', 0req, res, next, 'Use javascript to', 0);
+  res, // takes req, res, next) => {
+    await manageRequest(req, res, next, 'Use javascript to', 0);
 };
 
 apiController.codeToEnglish = async (req, res, next) => {
