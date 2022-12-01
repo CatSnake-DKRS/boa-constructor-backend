@@ -53,7 +53,7 @@ userController.login = async (req, res, next) => {
     //use the valid password method on the user to identify if user's hashed password
     //if the same as the one stored in the DB
     //method is defined in the user model
-    if (user.validPassword(password, user.dataValues.password)) {
+    if (await user.validPassword(password, user.dataValues.password)) {
       console.log('entering valid password');
       res.locals.user = user.username;
       return next();
